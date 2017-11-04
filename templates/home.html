@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="hot"></div>
+
+    <script>var dataObject = [
+        {% for weld in welds %}
+            {
+                id: '{{ weld.number }}',
+                ndeNumber: '{{ weld.nde_number }}',
+                weldDate: '{{ weld.weld_date }}',
+                ndeDate: '{{ weld.nde_date }}',
+                welder: '{% for thing in weld.welders.all %}{% if not forloop.first %}, {% endif %}<a href="#">{{ thing.stencil }}</a>{% endfor %}',
+                type: '{{ weld.type }}',
+                disposition: '{{ weld.disposition }}',
+                size:'{{ weld.pipe_size }}',
+                thickness:'{{ weld.pipe_thickness }}',
+                line:'{{ weld.line_number }}',
+                material:'{{ weld.material_type }}',
+                strength:'{{ weld.line_strength }}',
+                weldType:'{{ weld.weld_type }}',
+                rt:'{{ weld.rt }}',
+                code: '{% for thing in weld.wps.all %}<a href="#">{{ thing.code }}</a>{% endfor %}',
+                ndeCompany: '{% for thing in weld.nde_info.all %}{{ thing.nde_company }}{% endfor %}',
+                materialA: '{{ weld.material_a }}',
+                heatA: '{{ weld.heat_a }}',
+                gradeA: '{{ weld.grade_a }}',
+                materialB: '{{ weld.material_b }}',
+                heatB: '{{ weld.heat_b }}',
+                gradeB: '{{ weld.grade_b }}',
+                cutout: '{{ weld.cutout }}',
+                comment: '{{ weld.comments }}'
+
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+    ;
+
+    var hotElement = document.querySelector('#hot');
+    var hotElementContainer = hotElement.parentNode;
+    var hotSettings = {
+        data: dataObject,
+        columns: [
+            {
+                data: 'id',
+                type: 'text',
+                width: 40
+            },
+            {
+                data: 'ndeNumber',
+                type: 'text'
+            },
+            {
+                data: 'weldDate',
+                type: 'text'
+            },
+            {
+                data: 'ndeDate',
+                type: 'text'
+            },
+             {
+                data: 'welder',
+                type: 'text',
+                 renderer: 'html'
+            },
+            {
+                data: 'type',
+                type: 'text'
+            },
+            {
+                data: 'disposition',
+                type: 'text'
+            },
+            {
+                data: 'size',
+                type: 'text'
+            },
+            {
+                data: 'thickness',
+                type: 'text'
+            },
+            {
+                data: 'line',
+                type: 'text'
+            },
+            {
+                data: 'material',
+                type: 'text'
+            },
+            {
+                data: 'strength',
+                type: 'text'
+            },
+            {
+                data: 'weldType',
+                type: 'text'
+            },
+            {
+                data: 'rt',
+                type: 'text'
+            },
+            {
+                data: 'code',
+                type: 'text',
+                renderer: 'html'
+            },
+            {
+                data: 'ndeCompany',
+                type: 'text'
+            },
+            {
+                data: 'materialA',
+                type: 'text'
+            },
+            {
+                data: 'heatA',
+                type: 'text'
+            },
+            {
+                data: 'gradeA',
+                type: 'text'
+            },
+            {
+                data: 'materialB',
+                type: 'text'
+            },
+            {
+                data: 'heatB',
+                type: 'text'
+            },
+            {
+                data: 'gradeB',
+                type: 'text'
+            },
+            {
+                data: 'cutout',
+                type: 'text'
+            },
+            {
+                data: 'comments',
+                type: 'text'
+            }
+        ],
+        stretchH: 'all',
+        autoWrapRow: true,
+        rowHeaders: true,
+        colHeaders: [
+            'ID',
+            'NDE Number',
+            'Weld Date',
+            'NDE Date',
+            'Welder',
+            'Type',
+            'disposition',
+            'Size',
+            'Thickness',
+            'Line',
+            'Material',
+            'Strength',
+            'Weld',
+            'RT',
+            'Code',
+            'NDE Company',
+            'Material A',
+            'Heat A',
+            'Grade A',
+            'Material B',
+            'Heat B',
+            'Grade B',
+            'Cutout',
+            'Comments'
+        ],
+        columnSorting: true,
+        sortIndicator: true,
+        autoColumnSize: {
+            samplingRatio: 23
+        },
+        mergeCells: true,
+        manualRowResize: true,
+        manualColumnResize: true,
+        manualRowMove: true,
+        manualColumnMove: true,
+        contextMenu: true
+    };
+    var hot = new Handsontable(hotElement, hotSettings);
+    </script>
+{% endblock %}
